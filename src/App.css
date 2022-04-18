@@ -2,37 +2,222 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+.title {
+  height: 64px;
+  line-height: 64px;
+  margin: 0;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.waiting {
+  animation: waiting 1.6s infinite !important;
+}
+.content {
+  height: calc(100vh - 64px);
+  background: #fafafa;
+  text-align: center;
+  padding: 120px 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+  position: relative;
+}
+.gradient {
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(to bottom, #fafafa, #d8d8d8 85%);
+  position: absolute;
+  bottom: 0;
+  z-index: 0;
+}
+.tip {
+  color: rgba(0,0,0,0.4);
+}
+.list-custom {
+  width: 980px;
+}
+.footer {
+  background: #ffffff !important;
+  text-align: center;
+}
+.guideImg {
+  height: 140px;
+  margin: 12px auto;
+
+}
+.strong {
+  color: #0052D9;
+  font-weight: 500;
+}
+.dlgFooter {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+.uploadBtn {
+  margin-left: 15px;
+}
+.t-upload__tips {
+  visibility: hidden !important;
+}
+.entry {
+  position: relative;
+  visibility: hidden;
+}
+.entryBtn {
+  box-shadow: 0 0 10px rgb(0,0,0,0.16);
+}
+.progress {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-top: -41px;
+  margin-left: -80px;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  visibility: hidden;
+  background: #fafafa!important;
+}
+.active {
+  visibility: visible;
+}
+.done {
+  animation: finish 0.4s cubic-bezier(.645,.045,.355,1) 1;
+}
+.titleIcon {
+  display: none !important;
+}
+.loading {
+  display: block !important;
+  margin-left: 6px;
+}
+.preview-window {
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  transform: translateY(-16px);
+  display: flex;
+  flex-direction: column;
+  z-index: 98;
+}
+.expand {
+  visibility: visible;
+  transition-duration: 0.4s;
+}
+.fold {
+  transform: translateY(-60px);
+  transition-duration: 0.3s;
+}
+.videoWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+}
+video {
+  width: 100%;
+  max-height: 540px;
+  border-radius: 8px;
+  overflow: hidden;
+  object-fit: contain;
+  box-shadow: 0 0 10px rgb(0,0,0,0.16);
+  position: relative;
+}
+.videoBox {
+  margin: 0 32px 0 32px;
+  border-radius: 8px;
+  overflow: unset;
+  opacity: 1;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  
+}
+.opacity {
+  opacity: 0;
+}
+.hide {
+  
+}
+.optBar {
+  height: 80px;
+  width: 100%;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: row;
+  
+}
+.L {
+  justify-content: space-between;
+}
+.R {
+  justify-content: center;
+}
+.arrow {
+  width: 48px;
+  height: 48px;
+  position: fixed;
+  right: 6px;
+  top: 50%;
+  margin-top: -24px;
+  opacity: 0.2;
+  cursor: pointer;
+  z-index: 100;
+  visibility: hidden;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+}
+.showArrow {
+  visibility: visible;
+}
+img {
+  -webkit-user-drag: none;
+}
+.mask {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  color: rgba(0,0,0,0.4);
+  padding-top: 24px;
+  position: fixed;
+  transform: translateY(384px);
+  transition-duration: 0.3s;
+  z-index: 99;
+  box-shadow: 0 -14px 16px -18px rgb(0, 0, 0, 0.16);
+}
+.reveal {
+  transform: translateY(calc(100vh));
 }
 
-.App-link {
-  color: #61dafb;
+@keyframes finish {
+  0% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@keyframes waiting {
+  0% {
+    opacity: 0.4;
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.4;
   }
 }
+
