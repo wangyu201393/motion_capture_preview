@@ -304,7 +304,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Layout>
+      <Layout className='App'>
         <Header className='header'>
           <h1 className={`title ${this.state.waiting?'waiting':''}`}>{this.state.title}<LoadingIcon  className={`titleIcon ${this.state.waiting?'loading':''}`}/></h1>
           <div className='toolBar'>
