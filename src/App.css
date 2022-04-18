@@ -1,7 +1,20 @@
 .App {
   text-align: center;
 }
-
+.header {
+  position: relative !important;
+}
+.toolBar {
+  height: 32px;
+  top: 16px;
+  left: 16px;
+  position: absolute !important;
+  display: flex;
+  align-items: center;
+}
+.openDrawer {
+  width: 44px;
+}
 .title {
   height: 64px;
   line-height: 64px;
@@ -10,7 +23,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+}
+.divider {
+  width: 1px;
+  height: 16px;
+  background: #EEEEEE;
+  margin: 0 16px;
 }
 .waiting {
   animation: waiting 1.6s infinite !important;
@@ -119,7 +137,6 @@
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  overflow: hidden;
 }
 video {
   width: 100%;
@@ -128,7 +145,6 @@ video {
   overflow: hidden;
   object-fit: contain;
   box-shadow: 0 0 10px rgb(0,0,0,0.16);
-  position: relative;
 }
 .videoBox {
   margin: 0 32px 0 32px;
@@ -137,7 +153,13 @@ video {
   opacity: 1;
   transition-duration: 0.3s;
   transition-timing-function: ease-out;
-  
+  position: relative;
+}
+.fullScreen {
+  position: absolute !important;
+  width: 40px !important;
+  left: 0;
+  top: -48px;
 }
 .opacity {
   opacity: 0;
@@ -189,7 +211,8 @@ img {
   padding-top: 24px;
   position: fixed;
   transform: translateY(384px);
-  transition-duration: 0.3s;
+  transition-duration: 0.6s;
+  transition-timing-function: cubic-bezier(.645,.045,.355,1);
   z-index: 99;
   box-shadow: 0 -14px 16px -18px rgb(0, 0, 0, 0.16);
 }

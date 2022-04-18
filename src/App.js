@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
-import { Upload, Layout, Dialog, Button, message, Progress } from 'tdesign-react';
-import { CloudUploadIcon, UploadIcon, LoadingIcon } from 'tdesign-icons-react';
+import { Upload, Layout, Dialog, Button, message, Progress, Drawer } from 'tdesign-react';
+import { CloudUploadIcon, UploadIcon, LoadingIcon, FullscreenIcon, MenuFoldIcon, MenuUnfoldIcon } from 'tdesign-icons-react';
 import 'tdesign-react/es/style/index.css';
 // import Crypto from 'crypto-js';
 // import Buffer from 'buffer';
@@ -35,6 +35,7 @@ class App extends React.Component {
       urlHead: '',
       taskId: 0,
       download: '',
+      drawerVisible: false,
     };
 
     window.addEventListener('resize', () => {
@@ -287,16 +288,41 @@ class App extends React.Component {
     return this.state.taskId;
   }
 
-  fsc1() {
+  fullScreen() {
+    document.getElementsByTagName('video')[0].requestFullscreen();
+  }
 
+  closeDrawer() {
+    this.setState({drawerVisible: false});
+  }
+
+  openDrawer() {
+    this.setState({
+      drawerVisible: true,
+    });
   }
 
   render() {
     return (
       <Layout>
-        <Header>
+        <Header className='header'>
           <h1 className={`title ${this.state.waiting?'waiting':''}`}>{this.state.title}<LoadingIcon  className={`titleIcon ${this.state.waiting?'loading':''}`}/></h1>
+          <div className='toolBar'>
+            <Button className='openDrawer' variant='outline' onClick={this.openDrawer.bind(this)}><MenuFoldIcon /></Button>
+            <span class="divider"></span>
+          </div>
         </Header>
+        <Drawer 
+          header='历史记录'
+          className='sideDrawer'
+          visible={this.state.drawerVisible}
+          onClose={this.closeDrawer.bind(this)} 
+          showOverlay={false}
+          footer={false}
+          placement="left"
+        >
+
+        </Drawer>
         <Content className='content'>
           <div className={`entry ${this.state.entryVisible?'active':''} ${this.state.expand?'fold':''}`}>
             <Button className='entryBtn' theme="primary" onClick={()=>{this.setState({dlgVisible: true})}} icon={<CloudUploadIcon />}>
@@ -322,6 +348,9 @@ class App extends React.Component {
                 className={`videoBox ${this.state.hideOrigin?'hide':''}`}
                 style={{'transform': this.state.hideOrigin?`translateX(${this.state.offsetX}px)`:'none'}}
               >
+                <Button className='fullScreen' variant='outline'  onClick={this.fullScreen.bind(this)}>
+                  <FullscreenIcon />
+                </Button>
                 <video 
                   src={this.state.resVideoURL}
                   autoPlay
