@@ -8,7 +8,7 @@ import 'tdesign-react/es/style/index.css';
 
 const { Header, Content } = Layout;
 const MAX_TIME = 30;
-//const API = 'http://9.134.88.214:3001/api/upload';
+// const API = 'http://9.134.88.214:3001/api/upload';
 const API = 'http://10.40.38.60:8002';
 
 class App extends React.Component {
@@ -339,13 +339,13 @@ class App extends React.Component {
               id='uploadProgress'
               className={`progress ${this.state.pg1Visible?'active':''} ${this.state.waiting?'waiting':'done'}`}
             >
-              <Progress theme={'circle'} percentage={this.state.uploadProgress} size="large"/>
+              <Progress  theme={'circle'} percentage={this.state.uploadProgress} size="large" strokeWidth={8}/>
             </div>
             <div 
               id='analyseProgress' 
               className={`progress ${this.state.pg2Visible?'active':''} ${this.state.waiting?'waiting':'done'}`}
             >
-              <Progress theme={'circle'} percentage={this.state.analyseProgress} size="large"/>
+              <Progress theme={'circle'} percentage={this.state.analyseProgress} size="large" strokeWidth={8}/>
             </div>
           </div>
           <div className={`preview-window ${this.state.expand?'expand':''}`}>

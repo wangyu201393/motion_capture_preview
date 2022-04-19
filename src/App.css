@@ -3,6 +3,7 @@
 }
 .header {
   position: relative !important;
+  border-bottom: 1px solid #eaeaea;
 }
 .toolBar {
   height: 32px;
@@ -34,7 +35,7 @@
   animation: waiting 1.6s infinite !important;
 }
 .content {
-  height: calc(100vh - 64px);
+  min-height: calc(100vh - 64px);
   background: #fafafa;
   text-align: center;
   padding: 120px 0 0 0;
@@ -128,7 +129,8 @@
 }
 .fold {
   transform: translateY(-60px);
-  transition-duration: 0.3s;
+  transition-duration: 0.6s;
+  transition-timing-function: cubic-bezier(.38,0,.24,1);
 }
 .videoWrapper {
   width: 100%;
@@ -152,7 +154,7 @@ video {
   overflow: unset;
   opacity: 1;
   transition-duration: 0.3s;
-  transition-timing-function: ease-out;
+  transition-timing-function: cubic-bezier(.38,0,.24,1);
   position: relative;
 }
 .fullScreen {
@@ -212,9 +214,10 @@ img {
   position: fixed;
   transform: translateY(384px);
   transition-duration: 0.6s;
-  transition-timing-function: cubic-bezier(.645,.045,.355,1);
+  transition-timing-function: cubic-bezier(.38,0,.24,1);
   z-index: 99;
-  box-shadow: 0 -14px 16px -18px rgb(0, 0, 0, 0.16);
+  box-shadow: 0 -6px 30px -5px #0000000d, 0 -16px 24px -2px #0000000a, 0 -8px 10px -5px #00000014;
+  border-radius: 32px 32px 0 0;
 }
 .reveal {
   transform: translateY(calc(100vh));
