@@ -8,7 +8,7 @@ import 'tdesign-react/es/style/index.css';
 
 const { Header, Content } = Layout;
 const MAX_TIME = 30;
-// const API = 'http://9.134.88.214:3001/api/upload';
+//const API = 'http://9.134.88.214:3001/api/upload';
 const API = 'http://10.40.38.60:8002';
 
 class App extends React.Component {
@@ -330,6 +330,7 @@ class App extends React.Component {
 
         </Drawer>
         <Content className='content'>
+          <div className={`gradient-top ${this.state.waiting?'bgChange':''}`}></div>
           <div className={`entry ${this.state.entryVisible?'active':''} ${this.state.expand?'fold':''}`}>
             <Button className='entryBtn' theme="primary" onClick={()=>{this.setState({dlgVisible: true})}} icon={<CloudUploadIcon />}>
               上传视频

@@ -53,6 +53,30 @@
   bottom: 0;
   z-index: 0;
 }
+.gradient-top {
+  width: 100%;
+  height: 250px;
+  opacity: 0;
+  position: absolute;
+  top: 180px;
+  z-index: 0;
+  background: linear-gradient(to top,rgba(0,82,217,.3),rgba(187,211,251,0));
+}
+.bgChange {
+  animation: bgChange 1.6s infinite;
+}
+
+@keyframes bgChange {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 .tip {
   color: rgba(0,0,0,0.4);
 }
@@ -100,6 +124,8 @@
   justify-content: center;
   visibility: hidden;
   background: #fafafa!important;
+  border-radius: 160px !important;
+  overflow: hidden !important;
 }
 .active {
   visibility: visible;
@@ -175,7 +201,6 @@ video {
   margin-top: 24px;
   display: flex;
   flex-direction: row;
-  
 }
 .L {
   justify-content: space-between;
