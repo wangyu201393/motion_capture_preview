@@ -289,7 +289,13 @@ class App extends React.Component {
   }
 
   fullScreen() {
-    document.getElementsByTagName('video')[0].requestFullscreen();
+    let usrAg = window.navigator.userAgent;
+    if (!document.fullscreenElement && usrAg.includes('Chrome')) {
+      document.getElementsByTagName('video')[0].requestFullscreen();
+    }
+    if (!document.webkitDisplayingFullscreen && usrAg.includes('Safari')) {
+      document.getElementsByTagName('video')[0].webkitEnterFullscreen();
+    }
   }
 
   closeDrawer() {
@@ -309,7 +315,7 @@ class App extends React.Component {
           <h1 className={`title ${this.state.waiting?'waiting':''}`}>{this.state.title}<LoadingIcon  className={`titleIcon ${this.state.waiting?'loading':''}`}/></h1>
           <div className='toolBar'>
             <Button className='openDrawer' variant='outline' onClick={this.openDrawer.bind(this)}><MenuFoldIcon /></Button>
-            <span class="divider"></span>
+            <span className="divider"></span>
           </div>
         </Header>
         <Drawer 
