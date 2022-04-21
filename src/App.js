@@ -219,7 +219,6 @@ class App extends React.Component {
           this.setState({ resVideoURL: url });
           // console.log(this.state.resVideoURL);
           this.finish();
-          this.catchError(fileStream.size);
           clearInterval(timer);
           // prepare to download video
           let a = document.getElementById('download');
@@ -307,13 +306,6 @@ class App extends React.Component {
     this.setState({
       drawerVisible: true,
     });
-  }
-
-  catchError(size) {
-    if (size === 0) {
-      this.setState({title: '后台解析出现异常，请稍后重试'});
-      message.error('任务未完成');
-    }
   }
 
   render() {
