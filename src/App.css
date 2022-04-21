@@ -5,16 +5,32 @@
   position: relative !important;
   border-bottom: 1px solid #eaeaea;
 }
+.reflect {
+  animation: reflect 1.6s infinite !important;
+}
 .toolBar {
   height: 32px;
   top: 16px;
-  left: 16px;
   position: absolute !important;
   display: flex;
   align-items: center;
 }
+.left {
+  left: 16px;
+}
+.right {
+  right: 16px;
+}
 .openDrawer {
-  width: 44px;
+  cursor: pointer !important;
+}
+.popTip {
+  display: flex;
+  flex-wrap: wrap;
+}
+.t-dialog {
+  border-radius: 12px !important;
+  overflow: hidden !important;
 }
 .title {
   height: 64px;
@@ -272,3 +288,14 @@ img {
   }
 }
 
+@keyframes reflect {
+  0% {
+    border-bottom: 1px solid #eaeaea;
+  }
+  50% {
+    border-bottom: 1px solid rgba(0,82,217,.16);
+  }
+  100% {
+    border-bottom: 1px solid #eaeaea;
+  }
+}

@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
-import { Upload, Layout, Dialog, Button, message, Progress, Drawer } from 'tdesign-react';
-import { CloudUploadIcon, UploadIcon, LoadingIcon, FullscreenIcon, MenuFoldIcon, MenuUnfoldIcon } from 'tdesign-icons-react';
+import { Upload, Layout, Dialog, Button, message, Progress, Drawer, Popup } from 'tdesign-react';
+import { CloudUploadIcon, UploadIcon, LoadingIcon, FullscreenIcon, BulletpointIcon, HelpCircleFilledIcon } from 'tdesign-icons-react';
 import 'tdesign-react/es/style/index.css';
 // import Crypto from 'crypto-js';
 // import Buffer from 'buffer';
@@ -71,7 +71,7 @@ class App extends React.Component {
   }
 
   invalidButton() {
-    message.warning(`暂无可下载资源`);
+    message.warning(`暂无可用资源`);
   }
 
   analyseError() {
@@ -219,6 +219,7 @@ class App extends React.Component {
           this.setState({ resVideoURL: url });
           // console.log(this.state.resVideoURL);
           this.finish();
+          this.catchError(fileStream.size);
           clearInterval(timer);
           // prepare to download video
           let a = document.getElementById('download');
@@ -308,14 +309,26 @@ class App extends React.Component {
     });
   }
 
+  catchError(size) {
+    if (size === 0) {
+      this.setState({title: '后台解析出现异常，请稍后重试'});
+      message.error('任务未完成');
+    }
+  }
+
   render() {
     return (
       <Layout className='App'>
-        <Header className='header'>
+        <Header className={`header ${this.state.waiting?'reflect':''}`}>
           <h1 className={`title ${this.state.waiting?'waiting':''}`}>{this.state.title}<LoadingIcon  className={`titleIcon ${this.state.waiting?'loading':''}`}/></h1>
-          <div className='toolBar'>
-            <Button className='openDrawer' variant='outline' onClick={this.openDrawer.bind(this)}><MenuFoldIcon /></Button>
+          <div className='toolBar left'>
+            <BulletpointIcon className='openDrawer' size={24} color="#00000099" onClick={this.openDrawer.bind(this)}/>
             <span className="divider"></span>
+          </div>
+          <div className='toolBar right'>
+            <Popup trigger="hover" showArrow content={<div className='popTip'>由于目前后台性能有限，因此遇到请求高峰期可能会出现解析异常，此时请稍等片刻再重试或联系后台管理人员。谢谢🙏</div>}>
+              <HelpCircleFilledIcon size={26} color="#ababab"/>
+            </Popup>
           </div>
         </Header>
         <Drawer 
