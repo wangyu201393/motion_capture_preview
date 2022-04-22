@@ -332,7 +332,7 @@ class App extends React.Component {
         <Content className='content'>
           <div className={`gradient-top ${this.state.waiting?'bgChange':''}`}></div>
           <div className={`entry ${this.state.entryVisible?'active':''} ${this.state.expand?'fold':''}`}>
-            <Button className='entryBtn' theme="primary" onClick={()=>{this.setState({dlgVisible: true})}} icon={<CloudUploadIcon />}>
+            <Button className='entryBtn' onClick={()=>{this.setState({dlgVisible: true})}} icon={<CloudUploadIcon />}>
               上传视频
             </Button>
             <p className="tip">视频时长小于30s</p>

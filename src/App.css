@@ -76,7 +76,7 @@
   position: absolute;
   top: 180px;
   z-index: 0;
-  background: linear-gradient(to top,rgba(0,82,217,.3),rgba(187,211,251,0));
+  background: linear-gradient(to top,#0071f345,#0071f300);
 }
 .bgChange {
   animation: bgChange 1.6s infinite;
@@ -128,8 +128,18 @@
   visibility: hidden;
 }
 .entryBtn {
-  box-shadow: 0 0 10px rgb(0,0,0,0.16);
+  box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
 }
+.t-button--theme-primary {
+  background-color: #0070f3 !important;
+  border-color: #0070f3 !important;
+  box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%) !important;
+}
+.t-button--variant-outline {
+  color: #696969 !important;
+  box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%) !important;
+}
+
 .progress {
   position: absolute;
   top: 0;
@@ -296,7 +306,7 @@ img {
     border-bottom: 1px solid #eaeaea;
   }
   50% {
-    border-bottom: 1px solid rgba(0,82,217,.16);
+    border-bottom: 1px solid #0071f330;
   }
   100% {
     border-bottom: 1px solid #eaeaea;
