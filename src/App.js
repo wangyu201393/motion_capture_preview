@@ -3,7 +3,7 @@ import React from 'react';
 import { Upload, Layout, Dialog, Button, message, Progress, Drawer, Popup } from 'tdesign-react';
 import { CloudUploadIcon, UploadIcon, LoadingIcon, FullscreenIcon, BulletpointIcon, HelpCircleFilledIcon } from 'tdesign-icons-react';
 import 'tdesign-react/es/style/index.css';
-// import Crypto from 'crypto-js';
+import Crypto from 'crypto-js';
 // import Buffer from 'buffer';
 
 const { Header, Content } = Layout;
@@ -172,9 +172,9 @@ class App extends React.Component {
       let dataBase64 = urlParts[1];
       reader.readAsArrayBuffer(file.raw);
       reader.onload = () => {
-        // let wordArray = Crypto.lib.WordArray.create(reader.result);
+        let wordArray = Crypto.lib.WordArray.create(reader.result);
         xhr.send(JSON.stringify({
-          task_id: this.getId(), // only Nnumber allowed?
+          task_id: this.MD5(wordArray),
           file_type: 'video',
           file_name: file.name,
           file_data: dataBase64,
