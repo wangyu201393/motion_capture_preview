@@ -44,7 +44,6 @@ class App extends React.Component {
   }
 
   handleChange(file) {
-    console.log(file)
     console.log('onChange');
     this.setState({
       entryVisible: false,
@@ -86,7 +85,7 @@ class App extends React.Component {
       let video = document.createElement('video');
       video.src = file.url;
       video.onloadedmetadata = () => {
-        console.log("local video onloadedmetadata")
+        console.log("local video onload etadata")
         if (video.duration > MAX_TIME) {
           message.warning(`上传的视频时长不能超过${MAX_TIME}秒`);
           reject(new Error(false));
@@ -170,16 +169,12 @@ class App extends React.Component {
       let urlParts = dataURL.split(',');
       this.setState({urlHead: urlParts[0]});
       let dataBase64 = urlParts[1];
-      reader.readAsArrayBuffer(file.raw);
-      reader.onload = () => {
-        let wordArray = Crypto.lib.WordArray.create(reader.result);
-        xhr.send(JSON.stringify({
-          task_id: this.MD5(wordArray),
-          file_type: 'video',
-          file_name: file.name,
-          file_data: dataBase64,
-        }));
-      }
+      xhr.send(JSON.stringify({
+        task_id: this.SHA256(dataBase64),
+        file_type: 'video',
+        file_name: file.name,
+        file_data: dataBase64,
+      }));
     }
   }
 
@@ -197,45 +192,45 @@ class App extends React.Component {
     var timer = setInterval(() => {
       let xhr = new XMLHttpRequest();
       xhr.open('GET', this.state.resURL, true);
-        xhr.onload = () => {
-          let res = JSON.parse(xhr.response);
-          console.log(res);
-          if (Number(res.progression) < 1.0 && (res.progression >= lastPrg)) {
-            this.setState({ analyseProgress: Number(parseInt(res.progression * 100))});
-            lastPrg = res.progression;
-            return;
-          }
-          let bstr = window.atob(res.file_data); // 获得base64解码后的字符串
-          let n = bstr.length;
-          let ab = new ArrayBuffer(n);
-          let u8arr = new Uint8Array(ab); // 新建一个8位的整数类型数组，用来存放ASCII编码的字符串
-          while (n--) {
-              u8arr[n] = bstr.charCodeAt(n) // 转换编码后才使用charCodeAt 找到Unicode编码 
-          }
-          const fileStream = new Blob([ab], { type: 'video/mp4' });
-          console.log(fileStream);
-          let url = window.URL.createObjectURL(fileStream) // blob url
-          // load video 
-          this.setState({ resVideoURL: url });
-          // console.log(this.state.resVideoURL);
-          this.finish();
-          clearInterval(timer);
-          // prepare to download video
-          let a = document.getElementById('download');
-          a.href = url;
-          a.download = 'motion_capture_' + res.file_name;
-          console.log('---- Loop query finished');
+      xhr.send();
+      xhr.onload = () => {
+        let res = JSON.parse(xhr.response);
+        console.log(res);
+        if (Number(res.progression) < 1.0 && (res.progression >= lastPrg)) {
+          this.setState({ analyseProgress: Number(parseInt(res.progression * 100))});
+          lastPrg = res.progression;
+          return;
         }
-        xhr.send();
-        console.log("---- Query sent")
+        clearInterval(timer);
+        let bstr = window.atob(res.file_data); // 获得base64解码后的字符串
+        let n = bstr.length;
+        let ab = new ArrayBuffer(n);
+        let u8arr = new Uint8Array(ab); // 新建一个8位的整数类型数组，用来存放ASCII编码的字符串
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n) // 转换编码后才使用charCodeAt 找到Unicode编码 
+        }
+        const fileStream = new Blob([ab], { type: 'video/mp4' });
+        console.log(fileStream);
+        let url = window.URL.createObjectURL(fileStream) // blob url
+        // load video 
+        this.setState({ resVideoURL: url });
+        // console.log(this.state.resVideoURL);
+        this.finish();
+        // prepare to download video
+        let a = document.getElementById('download');
+        a.href = url;
+        a.download = 'motion_capture_' + res.file_name;
+        console.log('---- Loop query finished');
+      }
+      console.log("---- Query sent")
     }, 3000);
   }
 
-  MD5(wordArray) {
-    let t1 = new Date().getTime();
+  SHA256(base64) {
+    // Base64 -> wordArray -> hash String
+    let str = window.btoa(new Date().getTime().toString()).concat(base64);
+    let wordArray = Crypto.enc.Base64.parse(str)
     let hash = Crypto.SHA256(wordArray).toString();
-    let t2 = new Date().getTime();
-    console.log('Crypto-SHA256 time cost(ms): ' + (t2 - t1))
     console.log(hash);
     return hash;
   }
@@ -439,7 +434,7 @@ class App extends React.Component {
             </Dialog>
             <div className='gradient'></div>
         </Content>
-        <div className={`mask ${this.state.expand?'reveal':''}`}>Copyright @ 2019-2021 Tencent. All Rights Reserved</div>
+        <div className={`mask ${this.state.expand?'reveal':''} ${this.state.waiting?'noShadow':''}`}>Copyright @ 2019-2021 Tencent. All Rights Reserved</div>
         <img 
           src={require('./static/img/arrow-left.png')}
           className={`arrow ${(this.state.hideOrigin && this.state.expand)?'showArrow':''}`} 
