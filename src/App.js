@@ -421,8 +421,8 @@ class App extends React.Component {
               }
               onClose={()=>{this.setState({dlgVisible: false})}}
             >
-              <h2>为了得到最好的小K动捕效果，请注意上传视频的要求：</h2>
-              <img src={require('./static/img/guide.png')} className='guideImg' alt='guide'></img>
+              <h2>为了得到最好的小鹅动捕效果，请注意上传视频的要求：</h2>
+              <img className='guideImg' src={require('./static/img/guide.png')} alt='guideImg'></img>
               <p>1. 单人全身清晰视频，四肢都在视频中，视频中人物不要太小;</p>
               <p>2. 视频中人物不要有物品遮挡身体，衣着简单，不要穿太宽松的上衣和过膝的裙子，以免遮挡身体;</p>
               <p>3如果是自己拍摄的视频，请注意:</p>
