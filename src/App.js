@@ -4,12 +4,10 @@ import { Upload, Layout, Dialog, Button, message, Progress, Drawer, Popup } from
 import { CloudUploadIcon, UploadIcon, LoadingIcon, FullscreenIcon, BulletpointIcon, HelpCircleFilledIcon } from 'tdesign-icons-react';
 import 'tdesign-react/es/style/index.css';
 import Crypto from 'crypto-js';
-// import Buffer from 'buffer';
 
 const { Header, Content } = Layout;
 const MAX_TIME = 30;
-//const API = 'http://9.134.88.214:3001/api/upload';
-const API = 'http://10.40.38.60:8002';
+const API = 'http://9.134.173.1:8001';
 
 class App extends React.Component {
   constructor(props) {
