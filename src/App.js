@@ -7,7 +7,7 @@ import Crypto from 'crypto-js';
 
 const { Header, Content } = Layout;
 const MAX_TIME = 30;
-const API = 'http://9.134.173.1:8001';
+const API = 'http://11.135.104.164:8001/';
 
 class App extends React.Component {
   constructor(props) {
