@@ -7,7 +7,7 @@ import Crypto from 'crypto-js';
 
 const { Header, Content } = Layout;
 const MAX_TIME = 30;
-const API = 'http://11.135.104.164:8001/';
+const API = 'http://mocap.testsite.woa.com';
 
 class App extends React.Component {
   constructor(props) {
@@ -127,7 +127,7 @@ class App extends React.Component {
       waiting: true
     });
     xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4 && xhr.status === 200) {  
+      if (xhr.readyState === 4 && xhr.status === 200) {
         let res = JSON.parse(xhr.response)
         console.log(res);
         if (!res.res_url || res.url === '') {
