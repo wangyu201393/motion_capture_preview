@@ -14,25 +14,19 @@ class App extends React.Component {
     super(props);
     this.state = {
       title: 'Motion Capture Portal',
-      dlgWidth: 620,
       dlgVisible: false,
       entryVisible: true,
       uploadProgress: 0,
       analyseProgress: 0,
-      pg1Visible: false,
-      pg2Visible: false,
-      waiting: false,
-      resVideoURL: '',
-      orgVideoURL: '',
-      resURL: '',
+      pg1Visible: false, // 上传进度条
+      pg2Visible: false, // 后台进度条
+      waiting: false,    // 上传中 或 后台解析中状态
+      resVideoURL: '',   // 由返回视频生成的Blob_url
+      orgVideoURL: '',   // 由本地源视频生成的Blob_url
+      resURL: '',        // 上传成功后，服务端返回用于后续轮询的url
       expand: false,
       hideOrigin: true,
-      resVideoReady: false,
-      orgVideoReady: false,
       offsetX: 0,
-      urlHead: '',
-      taskId: 0,
-      download: '',
       drawerVisible: false,
     };
 
@@ -42,7 +36,6 @@ class App extends React.Component {
   }
 
   handleChange(file) {
-    console.log('onChange');
     this.setState({
       entryVisible: false,
       dlgVisible: false,
@@ -83,7 +76,6 @@ class App extends React.Component {
       let video = document.createElement('video');
       video.src = file.url;
       video.onloadedmetadata = () => {
-        console.log("local video onload etadata")
         if (video.duration > MAX_TIME) {
           message.warning(`上传的视频时长不能超过${MAX_TIME}秒`);
           reject(new Error(false));
@@ -161,11 +153,8 @@ class App extends React.Component {
       console.log(fileStream);
       let url = window.URL.createObjectURL(fileStream) // blob url
       this.setState({orgVideoURL: url});
-      // console.log(this.state.orgVideoURL);
-      //
       let dataURL = reader.result;
       let urlParts = dataURL.split(',');
-      this.setState({urlHead: urlParts[0]});
       let dataBase64 = urlParts[1];
       xhr.send(JSON.stringify({
         task_id: this.SHA256(dataBase64),
@@ -199,6 +188,7 @@ class App extends React.Component {
           lastPrg = res.progression;
           return;
         }
+        // 进度达到100%，获得返回视频
         clearInterval(timer);
         let bstr = window.atob(res.file_data); // 获得base64解码后的字符串
         let n = bstr.length;
@@ -207,7 +197,7 @@ class App extends React.Component {
         while (n--) {
             u8arr[n] = bstr.charCodeAt(n) // 转换编码后才使用charCodeAt 找到Unicode编码 
         }
-        const fileStream = new Blob([ab], { type: 'video/mp4' });
+        const fileStream = new Blob([u8arr], { type: 'video/mp4' });
         console.log(fileStream);
         let url = window.URL.createObjectURL(fileStream) // blob url
         // load video 
@@ -234,7 +224,6 @@ class App extends React.Component {
   }
 
   finish() {
-    // 展示预览视频, 并存入Aside bar 和 LocalStorage?
     this.setState({
       title: '完成',
       analyseProgress: 100,
@@ -251,6 +240,7 @@ class App extends React.Component {
   }
 
   async requestMethod() {
+    // 终止组件内置上传行为，便于自定义上传方法
     return {
       status: 'fail',
     };
@@ -274,11 +264,6 @@ class App extends React.Component {
     let mid = window.innerWidth / 2;
     let left = (window.innerWidth - videos[0].clientWidth - videos[1].clientWidth - 64) / 2;
     this.setState({offsetX: (mid - left - videos[0].clientWidth / 2)});
-  }
-
-  getId() {
-    this.setState({taskId: this.state.taskId + 1});
-    return this.state.taskId;
   }
 
   fullScreen() {
@@ -398,7 +383,7 @@ class App extends React.Component {
           <Dialog
               header="上传视频须知"
               visible={this.state.dlgVisible}
-              width={this.state.dlgWidth}
+              width={620}
               footer={
                 <div className='dlgFooter'>
                   <Button variant="outline" onClick={()=>{this.setState({dlgVisible: false})}}>
